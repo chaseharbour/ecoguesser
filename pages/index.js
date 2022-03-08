@@ -1,5 +1,5 @@
-import Layout from "./components/layout";
-import LinkButton from "./components/link-button";
+import Layout from "../components/layout";
+import LinkButton from "../components/link-button";
 
 export default function Home() {
   return (
