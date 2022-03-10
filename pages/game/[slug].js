@@ -1,37 +1,34 @@
+import dynamic from "next/dynamic";
 import React, { useState, useEffect, useContext } from "react";
 import LinkButton from "../../components/link-button";
 import { fetchObservationData } from "../../utils/getObservationsEndpoint";
-
 import random from "../../utils/random";
 
-const Game = ({ data, error }) => {
-  const [seed, setSeed] = useState(Math.random() * 10);
-  const [taxaId, setTaxaId] = useState(1);
-  const [taxaData, setTaxaData] = useState(data.results);
+const Game = ({ data, lat, long, error }) => {
+  const [taxaData, setTaxaData] = useState(data.data.results);
 
   useEffect(() => {
-    const rand = random(seed);
-    setTaxaId(rand);
-  }, []);
-
-  useEffect(() => {
-    setTaxaData(data.results);
+    setTaxaData(data.data.results);
   }, [data]);
+
+  const MapNoSSR = dynamic(() => import("../../components/map"), {
+    ssr: false,
+  });
 
   return (
     <>
       <h1>Game</h1>
       <LinkButton location="/" label="Take me home" />
-      <p>{taxaId}</p>
       <ul>
         {taxaData.map((t) => (
           <li>
+            <img src={t.taxon.default_photo.medium_url}></img>
             <p>{t.taxon.preferred_common_name}</p>
-            <img src={t.taxon.default_photo.square_url}></img>
             <p>{t.taxon.name}</p>
           </li>
         ))}
       </ul>
+      <MapNoSSR lat={lat} long={long} />
     </>
   );
 };
@@ -39,17 +36,19 @@ const Game = ({ data, error }) => {
 export const getServerSideProps = async (context) => {
   const { slug } = context.query;
 
-  const unObfuscate = Buffer.from(slug, "base64").toString();
+  const decodeLatLong = Buffer.from(slug, "base64").toString("binary");
 
-  const lat = unObfuscate.split("@")[0];
-  const long = unObfuscate.split("@")[1];
+  const lat = decodeLatLong.split("@")[0];
+  const long = decodeLatLong.split("@")[1];
 
   const data = await fetchObservationData(lat, long);
 
-  console.log(data.results);
-
   return {
-    props: data,
+    props: {
+      lat,
+      long,
+      data,
+    },
   };
 };
 

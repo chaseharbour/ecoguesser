@@ -2,9 +2,8 @@ import axios from "axios";
 
 export const fetchLatLongData = async () => {
   try {
+    // const res = await axios.get("https://api.3geonames.org/randomland.US.json");
     const res = await axios.get("https://api.3geonames.org/randomland.json");
-
-    console.log(res.data);
 
     return {
       error: false,

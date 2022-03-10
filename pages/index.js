@@ -8,8 +8,13 @@ export default function Home({ data, error }) {
   const [gameId, setGameId] = useState(1);
 
   useEffect(() => {
-    const obfuscate = btoa(`${data.major.latt}@${data.major.longt}`);
-    setGameId(obfuscate);
+    //Encodes the lattitude and longitude to create a url slug. This should allow games to be shared with matching data simply by copy and pasting the url.
+    const encodeLatLong = Buffer.from(
+      `${data.major.latt}@${data.major.longt}`,
+      "binary"
+    ).toString("base64");
+
+    setGameId(encodeLatLong);
   }, []);
 
   return (
