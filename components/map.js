@@ -11,6 +11,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import "leaflet-defaulticon-compatibility";
 
 import ClickEvent from "./map-click-event";
+import MoveableMarker from "./map-moveable-marker";
 
 const Map = ({ lat, long }) => {
   return (
@@ -27,15 +28,21 @@ const Map = ({ lat, long }) => {
           "Map data &copy; <a href=&quot;https://www.openstreetmap.org/&quot;>OpenStreetMap</a> contributors, <a href=&quot;https://creativecommons.org/licenses/by-sa/2.0/&quot;>CC-BY-SA</a>, Imagery &copy; <a href=&quot;https://www.mapbox.com/&quot;>Mapbox</a>"
         }
       />
-      <Marker
+      {/* <Marker
         title={"Drag me!"}
         position={[32.7502, 114.7655]}
         draggable={true}
         autoPan={true}
         animate={true}
+        eventHandlers={{
+          click: (e) => {
+            this.setLatLng(e.latlng);
+          },
+        }}
       >
         <Popup>Drag me!</Popup>
-      </Marker>
+      </Marker> */}
+      <MoveableMarker origin={[32.7502, 114.7655]} />
       <ClickEvent lat={lat} long={long} />
     </MapContainer>
   );
