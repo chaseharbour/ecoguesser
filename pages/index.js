@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Layout from "../components/layout";
 import DynamicLinkButton from "../components/dynamic-link-button";
-import { fetchPlaceData } from "../utils/getPlaceEndpoint";
+
 import { fetchLatLongData } from "../utils/getLatLongEndpoint";
 
 export default function Home({ data, error }) {

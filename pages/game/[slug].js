@@ -1,8 +1,8 @@
 import dynamic from "next/dynamic";
-import React, { useState, useEffect, useContext } from "react";
-import LinkButton from "../../components/link-button";
+import React, { useState, useEffect, useCallback, memo } from "react";
 import { fetchObservationData } from "../../utils/getObservationsEndpoint";
 import random from "../../utils/random";
+import Button from "../../components/button";
 
 const Game = ({ data, lat, long, error }) => {
   const [taxaData, setTaxaData] = useState(data.data.results);
@@ -18,7 +18,6 @@ const Game = ({ data, lat, long, error }) => {
   return (
     <>
       <h1>Game</h1>
-      <LinkButton location="/" label="Take me home" />
       <ul>
         {taxaData.map((t) => (
           <li>
