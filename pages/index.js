@@ -10,7 +10,7 @@ export default function Home({ data, error }) {
   useEffect(() => {
     //Encodes the lattitude and longitude to create a url slug. This should allow games to be shared with matching data simply by copy and pasting the url.
     const encodeLatLong = Buffer.from(
-      `${data.major.latt}@${data.major.longt}`,
+      `${data.major.latt}@${data.major.longt}@${data.major.elevation}`,
       "binary"
     ).toString("base64");
 
@@ -24,6 +24,11 @@ export default function Home({ data, error }) {
         location={"/game/[slug]"}
         label="Play Now"
         asLoc={`/game/${gameId}`}
+      />
+      <DynamicLinkButton
+        location={"/test/[slug]"}
+        label="Test"
+        asLoc={`/test/${gameId}`}
       />
     </>
   );

@@ -92,7 +92,7 @@ const Map = ({ lat, long }) => {
         )}
         {gameState ? null : (
           <Marker
-            title={"Drag me!"}
+            title={"Actual Location"}
             position={[lat, long]}
             draggable={false}
             autoPan={true}

@@ -1,5 +1,5 @@
-import React from "react";
-import { Popup, useMap } from "react-leaflet";
+import { useEffect } from "react";
+import { Tooltip, useMap } from "react-leaflet";
 import { latLng } from "leaflet";
 
 const DistancePopup = ({ lat, long, latLongObj }) => {
@@ -10,7 +10,15 @@ const DistancePopup = ({ lat, long, latLongObj }) => {
     2
   );
 
-  return <Popup>{`You were ${distanceBtwnTrimmed} km away`}</Popup>;
+  useEffect(() => {
+    map.setView([lat, long], map.getZoom(), { animate: true });
+  }, []);
+
+  return (
+    <Tooltip
+      permanent={true}
+    >{`You were ${distanceBtwnTrimmed}km away`}</Tooltip>
+  );
 };
 
 export default DistancePopup;
