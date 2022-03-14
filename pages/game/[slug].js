@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { fetchObservationData } from "../../utils/getObservationsEndpoint";
 import Game from "../../components/game";
-import Map from "../../components/map";
+// import Map from "../../components/map";
 import random from "../../utils/random";
 
 const MapDynamic = dynamic(() => import("../../components/map"), {
