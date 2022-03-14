@@ -2,9 +2,9 @@ import dynamic from "next/dynamic";
 import React, { useState, useEffect, useCallback, memo } from "react";
 import { fetchObservationData } from "../../utils/getObservationsEndpoint";
 import random from "../../utils/random";
-import Button from "../../components/button";
+import Game from "../../components/game";
 
-const Game = ({ data, lat, long, error }) => {
+const GameWrapper = ({ data, lat, long, elev, error }) => {
   const [taxaData, setTaxaData] = useState(data.data.results);
 
   useEffect(() => {
@@ -17,16 +17,7 @@ const Game = ({ data, lat, long, error }) => {
 
   return (
     <>
-      <h1>Game</h1>
-      <ul>
-        {taxaData.map((t) => (
-          <li>
-            <img src={t.taxon.default_photo.medium_url}></img>
-            <p>{t.taxon.preferred_common_name}</p>
-            <p>{t.taxon.name}</p>
-          </li>
-        ))}
-      </ul>
+      <Game taxaData={taxaData} />
       <MapNoSSR lat={lat} long={long} />
     </>
   );
@@ -39,6 +30,7 @@ export const getServerSideProps = async (context) => {
 
   const lat = decodeLatLong.split("@")[0];
   const long = decodeLatLong.split("@")[1];
+  const elev = decodeLatLong.split("@")[2];
 
   const data = await fetchObservationData(lat, long);
 
@@ -46,9 +38,10 @@ export const getServerSideProps = async (context) => {
     props: {
       lat,
       long,
+      elev,
       data,
     },
   };
 };
 
-export default Game;
+export default GameWrapper;
