@@ -18,25 +18,33 @@ const GameWrapper = () => {
   const { query } = useRouter();
 
   useEffect(() => {
+    console.log(query);
+
     const decodeLatLong = Buffer.from(query.slug, "base64").toString("binary");
 
     const lat = decodeLatLong.split("@")[0];
     const long = decodeLatLong.split("@")[1];
 
     setLatLong({ lat, long });
-  }, []);
+  }, [query]);
 
-  useEffect(async () => {
-    const res = await fetchObservationData(latLong.lat, latLong.long);
+  useEffect(() => {
+    const apiCall = async () => {
+      const res = await fetchObservationData(latLong.lat, latLong.long);
 
-    console.log(res);
+      const filtered = res.data.results.filter((obs, i, arr) => {
+        i === arr.findIndex((t) => t.taxon.id === obs.taxon.id);
+      });
 
-    // const filtered = res.data.data.results.filter((obs, i, arr) => {
-    //   arr.findIndex((t) => t.taxon.id === obs.taxon.id) === i;
-    // });
+      console.log(filtered);
 
+      setTaxaData(res.data.results);
+    };
+
+    if (Object.keys(latLong).length !== 0) {
+      apiCall();
+    }
     // console.log(filtered);
-    setTaxaData(res.data.data.results);
   }, [latLong]);
 
   useEffect(() => {

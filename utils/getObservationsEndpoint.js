@@ -18,10 +18,7 @@ export const fetchObservationData = async (lat, long) => {
       await axios.get(`https://api.inaturalist.org/v1/observations?captive=false&identified=true&native=true&out_of_range=false&photos=true&lat=${lat}&lng=${long}&radius=200&order=desc&order_by=created_at&ttl=${config.maxAge}
         `);
 
-    return {
-      error: false,
-      data: res,
-    };
+    return res;
   } catch (err) {
     console.error(err);
   }
