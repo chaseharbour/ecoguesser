@@ -1,9 +1,10 @@
 import React from "react";
 
-const Game = ({ taxaData }) => {
+const Game = ({ taxaData, elev }) => {
   return (
     <div>
       <h1>Game</h1>
+      <p>Guess the location at an elevation of: {elev}m</p>
       <ul>
         {taxaData.map((t) => (
           <li>

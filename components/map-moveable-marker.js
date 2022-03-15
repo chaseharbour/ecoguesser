@@ -15,7 +15,6 @@ const MoveableMarker = ({ origin, moveable, clickHandler, updateHandler }) => {
       const marker = markerRef.current;
       marker.setLatLng(e.latlng);
       updateHandler(e.latlng);
-      console.log(e.latlng);
       clickHandler(e.latlng);
     }
 

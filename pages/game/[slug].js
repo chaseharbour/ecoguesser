@@ -17,7 +17,7 @@ const GameWrapper = ({ data, lat, long, elev, error }) => {
 
   return (
     <>
-      <Game taxaData={taxaData} />
+      <Game taxaData={taxaData} elev={elev} />
       <MapNoSSR lat={lat} long={long} />
     </>
   );
@@ -32,7 +32,7 @@ export const getServerSideProps = async (context) => {
   const long = decodeLatLong.split("@")[1];
   const elev = decodeLatLong.split("@")[2];
 
-  const data = await fetchObservationData(lat, long);
+  const data = await fetchObservationData(lat, long, 5, 1, "id");
 
   return {
     props: {
